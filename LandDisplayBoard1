@@ -1,0 +1,126 @@
+ Private Sub Lane1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        ' Dim dbLotName As String
+        Dim dbLotStat As Array
+        Dim dblotid As Array
+        Dim i As Integer
+        Using connObj As New SqlClient.SqlConnection("Data Source= .\SQLExpress;AttachDbFilename=C:\Users\Muthunagai\Documents\SQL Server Management Studio\LotStatus.mdf;Integrated Security=True;User Instance=True")
+            Using cmdObj As New SqlClient.SqlCommand("select LotID, LotStatus from LotDetails where LotID = 2", connObj)
+
+                connObj.Open()
+                Using readerObj As SqlClient.SqlDataReader = cmdObj.ExecuteReader
+
+                    dbLotStat = readerObj("LotStatus")
+                    dblotid = readerObj("LotID")
+                    i = 1
+                    For i = 1 To 16 Step 1
+                        Select Case i
+                            Case 1
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox1.BackColor = Color.Red
+                                Else
+                                    TextBox1.BackColor = Color.Green
+                                End If
+                            Case 2
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox2.BackColor = Color.Red
+                                Else
+                                    TextBox2.BackColor = Color.Green
+                                End If
+                            Case 3
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox3.BackColor = Color.Red
+                                Else
+                                    TextBox3.BackColor = Color.Green
+                                End If
+                            Case 4
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox4.BackColor = Color.Red
+                                Else
+                                    TextBox4.BackColor = Color.Green
+                                End If
+                            Case 5
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox5.BackColor = Color.Red
+                                Else
+                                    TextBox5.BackColor = Color.Green
+                                End If
+                            Case 6
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox6.BackColor = Color.Red
+                                Else
+                                    TextBox6.BackColor = Color.Green
+                                End If
+                            Case 7
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox7.BackColor = Color.Red
+                                Else
+                                    TextBox7.BackColor = Color.Green
+                                End If
+                            Case 8
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox8.BackColor = Color.Red
+                                Else
+                                    TextBox8.BackColor = Color.Green
+                                End If
+
+                            Case 9
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox9.BackColor = Color.Red
+                                Else
+                                    TextBox9.BackColor = Color.Green
+                                End If
+                            Case 10
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox10.BackColor = Color.Red
+                                Else
+                                    TextBox10.BackColor = Color.Green
+                                End If
+                            Case 11
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox11.BackColor = Color.Red
+                                Else
+                                    TextBox11.BackColor = Color.Green
+                                End If
+                            Case 12
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox12.BackColor = Color.Red
+                                Else
+                                    TextBox12.BackColor = Color.Green
+                                End If
+                            Case 13
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox13.BackColor = Color.Red
+                                Else
+                                    TextBox13.BackColor = Color.Green
+                                End If
+                            Case 14
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox14.BackColor = Color.Red
+                                Else
+                                    TextBox14.BackColor = Color.Green
+                                End If
+                            Case 15
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox15.BackColor = Color.Red
+                                Else
+                                    TextBox15.BackColor = Color.Green
+                                End If
+                            Case 16
+                                If (dbLotStat(i) = "True") Then
+                                    TextBox16.BackColor = Color.Red
+                                Else
+                                    TextBox16.BackColor = Color.Green
+                                End If
+                            Case Else
+                                Console.WriteLine("not a valid lot")
+
+                        End Select
+
+                    Next
+                End Using
+                connObj.Close()
+            End Using
+        End Using
+
+    End Sub
