@@ -1,0 +1,32 @@
+Public Class Mainboard
+    Private Sub Mainboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        refresh_main_data()
+
+    End Sub
+
+    Public Sub refresh_main_data()
+        Dim i As Integer
+        Using connObj As New SqlClient.SqlConnection("Data Source=localhost;Initial Catalog = Lotstatus;Integrated Security=SSPI")
+            'Provider=SQLOLEDB;Data Source=muthunagai;"Initial Catalog = databaseName;User ID = MyUserID;"  .\SQLExpress
+
+            Using cmdObj As New SqlClient.SqlCommand("Select [Lotstatus], [LotID] from [Lotstatus].[dbo].[LotDetails];", connObj)
+
+                connObj.Open()
+                Using readerObj As SqlClient.SqlDataReader = cmdObj.ExecuteReader
+                    Do While readerObj.Read()
+                        If readerObj("Lotstatus") = False Then
+                            i += 1
+                        End If
+                    Loop
+
+                    TextBox1.Text = i
+
+                End Using
+
+            End Using
+            connObj.Close()
+        End Using
+    End Sub
+
+
+End Class
