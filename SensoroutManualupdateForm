@@ -1,0 +1,85 @@
+Public Class receivesensoroutput
+    Private Sub receivesensoroutput_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Lane1.Show()
+        Mainboard.Show()
+
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Using connObj As New SqlClient.SqlConnection("Data Source=localhost;Initial Catalog = Lotstatus;Integrated Security=SSPI")
+            'Provider=SQLOLEDB;Data Source=Muthunagai;"Initial Catalog = databaseName;User ID = MyUserID;"  .\SQLExpress
+            Dim lot As Integer
+            lot = TextBox5.Text
+            Dim sqlquery As String
+            sqlquery = String.Format("Select [LotID],[LotName],[LaneName],[ZoneName],[LotStatus] from [Lotstatus].[dbo].[LotDetails] where [LotID] ={0}", lot)
+
+            Using cmdObj As New SqlClient.SqlCommand(sqlquery, connObj)
+
+                connObj.Open()
+                Using readerObj As SqlClient.SqlDataReader = cmdObj.ExecuteReader
+                    readerObj.Read()
+
+                    ComboBox1.Text = readerObj("LotStatus")
+                    TextBox3.Text = readerObj("LotName")
+                    TextBox2.Text = readerObj("LaneName")
+                    TextBox1.Text = readerObj("ZoneName")
+                    TextBox5.Text = readerObj("LotID")
+
+
+                End Using
+
+            End Using
+            connObj.Close()
+        End Using
+
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Using connObj As New SqlClient.SqlConnection("Data Source=localhost;Initial Catalog = Lotstatus;Integrated Security=SSPI")
+            'Provider=SQLOLEDB;Data Source=serverName;"Initial Catalog = databaseName;User ID = MyUserID;"  .\SQLExpress
+            Dim zname As String
+            Dim lname As String
+            Dim lot As String
+            Dim lstat As Boolean
+            Dim lid As Integer
+            Dim savecommand As String
+
+            zname = TextBox1.Text
+            lname = TextBox2.Text
+            lot = TextBox3.Text
+            lstat = ComboBox1.Text
+            lid = TextBox5.Text
+
+            savecommand = String.Format(" Update [Lotstatus].[dbo].[LotDetails] Set  [LotStatus] = '{0}' where [LotID] = '{1}'", lstat, lid)
+            '    MessageBox.Show(savecommand)
+
+            '   savecommand = " Update [dbo].[Lotstatus] Set  [LotStatus] = {0} where [LotID] = {1}",
+            Using setCmd As New SqlClient.SqlCommand(savecommand, connObj)
+
+                'insidedata(savecommand)
+                connObj.Open()
+                setCmd.ExecuteNonQuery()
+
+                '   Using readerObj As SqlClient.SqlDataReader = cmdObj.ExecuteReader
+
+
+                connObj.Close()
+
+            End Using
+
+        End Using
+        Lane1.Refresh()
+        Lane1.refresh_lane_data()
+        Mainboard.Refresh()
+        Mainboard.refresh_main_data()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        TextBox1.Text = ""
+        TextBox2.Text = ""
+        TextBox3.Text = ""
+        TextBox5.Text = ""
+        ComboBox1.Items.Clear()
+    End Sub
+End Class
